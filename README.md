@@ -1,0 +1,1 @@
+# Openshift-3.6
