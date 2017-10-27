@@ -1,6 +1,6 @@
 ## 概述 {#developers-console-before-you-begin}
 
-这个入门教程将引导您完成在OpenShift Container Platform上获取示例项目并采取的最简单的方法。
+入门教程将引导您完成在OpenShift Container Platform上获取示例项目并采取的最简单的方法。
 
 OpenShift Container Platform3 为开发人员提供了一套[语言](https://docs.openshift.com/container-platform/3.5/using_images/s2i_images/index.html#using-images-s2i-images-index)和[数据库](https://docs.openshift.com/container-platform/3.5/using_images/db_images/index.html#using-images-db-images-index)，可让您启动应用程序开发。
 
