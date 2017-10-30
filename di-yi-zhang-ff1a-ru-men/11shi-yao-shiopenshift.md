@@ -1,3 +1,5 @@
+# 使用Web控制台创建和构建镜像
+
 ## 概述 {#developers-console-before-you-begin}
 
 该入门指南将引导您在OpenShift Container Platform上采取的最简单的方法创建示例项目。虽然启动镜像有多种不同的方法，但本节侧重于最快速和最简单的方法。
@@ -39,11 +41,11 @@ OpenShift Container Platform提供的其他镜像包括：
 
 > ![](/assets/提示3%.png)本节采用Ruby示例，您也可以使用[OpenShift Container Platform GitHub项目中提供的](https://www.gitbook.com/book/fanxinwei/openshift_3-6/edit#)任何语言示例进行实验
 
-2. 建立你的分支仓库
+1. 建立你的分支仓库
 
-3. 复制 clone URL在你的分支仓库中。
+2. 复制 clone URL在你的分支仓库中。
 
-4. 将仓库克隆到本地计算机。
+3. 将仓库克隆到本地计算机。
 
 ## 参考视频 {#developers-console-video}
 
@@ -72,13 +74,13 @@ OpenShift Container Platform提供的其他镜像包括：
 1. 如果创建新项目没有自动将您重定向到“选择图像”或“模板”页面，则可能需要单击“Add to project**”。**
 2. 单击Browe，然后从下拉列表中选择**ruby**。
 
-1. 点击ruby:latest构建镜像。
+3. 点击ruby:latest构建镜像。
 
-2. 键入一个**名称**为您的应用程序，并指定**Git仓库URL：**[`https://github.com/<your_github_username>/ruby-ex.git`](https://github.com/%3Cyour_github_username%3E/ruby-ex.git)。
+4. 键入一个**名称**为您的应用程序，并指定**Git仓库URL：**[`https://github.com/<your_github_username>/ruby-ex.git`](https://github.com/<your_github_username>/ruby-ex.git)。
 
-3. （可选）单击**Show advanced routing, build, and deployment options**，但默认情况下，此示例应用程序会自动创建路由，Webhook触发器和构建更改触发器。
+5. （可选）单击**Show advanced routing, build, and deployment options**，但默认情况下，此示例应用程序会自动创建路由，Webhook触发器和构建更改触发器。
 
-4. 单击**创建。**
+6. 单击**创建。**
 
 > ![](/assets/提示3%.png)创建后，可以通过单击**Brose、Builds**，然后单击**Actions**，**Edit**或**Edit YAML**，可从Web控制台修改其中一些设置。
 
