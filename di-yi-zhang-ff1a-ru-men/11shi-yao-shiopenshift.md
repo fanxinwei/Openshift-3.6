@@ -37,17 +37,19 @@ OpenShift Container Platform提供的其他镜像包括：
 
 1. 登录到GitHub，访问[Ruby示例](https://github.com/openshift/ruby-ex)页面。
 
-         这件![](/assets/感叹号3%.png)
+   ![](/assets/感叹号3%.png)
 
-1. |  | 本主题遵循Ruby示例，但您可以使用[OpenShift Container Platform GitHub项目中提供的](https://docs.openshift.com/container-platform/3.6/getting_started/developers_console.html#getting-started-developers-cli-languages)任何语言示例。 |
-   | :--- | :--- |
-2. [叉存储库](https://help.github.com/articles/fork-a-repo/)。
+2. 
+3. \|  \| 本主题遵循Ruby示例，但您可以使用[OpenShift Container Platform GitHub项目中提供的](https://docs.openshift.com/container-platform/3.6/getting_started/developers_console.html#getting-started-developers-cli-languages)任何语言示例。 \|  
+   \| :--- \| :--- \|
+
+4. [叉存储库](https://help.github.com/articles/fork-a-repo/)。
 
    你被重定向到你的新叉子。
 
-3. 复制叉子的克隆URL。
+5. 复制叉子的克隆URL。
 
-4. 将存储库克隆到本地计算机。
+6. 将存储库克隆到本地计算机。
 
 ## 后续示例介绍的参考视频 {#developers-console-video}
 
