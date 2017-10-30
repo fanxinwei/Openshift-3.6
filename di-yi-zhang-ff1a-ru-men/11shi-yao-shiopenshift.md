@@ -1,17 +1,19 @@
 ## 概述 {#developers-console-before-you-begin}
 
-入门教程将引导您完成在OpenShift Container Platform上获取示例项目并采取的最简单的方法。
+该入门指南将引导您在OpenShift Container Platform上采取的最简单的方法创建示例项目。虽然启动镜像有多种不同的方法，但本节侧重于最快速和最简单的方法。
+
+如果这是您阅读的文档的第一部分，并且您不熟悉OpenShift容器平台版本3（v3）的核心概念，则可能需要首先阅读[新内容](https://docs.openshift.com/container-platform/3.6/release_notes/index.html#release-notes-index)。此版本的OpenShift容器平台与版本2（v2）有着显著不同。
 
 OpenShift Container Platform3 为开发人员提供了一套[语言](https://docs.openshift.com/container-platform/3.5/using_images/s2i_images/index.html#using-images-s2i-images-index)和[数据库](https://docs.openshift.com/container-platform/3.5/using_images/db_images/index.html#using-images-db-images-index)，可让您启动应用程序开发。
 
-| Language | Implementations and Tutorials |
+| 语言 | 实现和教程 |
 | :--- | :--- |
 | Ruby | [Rails](https://github.com/openshift/rails-ex) |
 | Python | [Django](https://github.com/openshift/django-ex) |
 | Node.js | [Node.js](https://github.com/openshift/nodejs-ex) |
 | PHP | [CakePHP](https://github.com/openshift/cakephp-ex) |
 | Perl | [Dancer](https://github.com/openshift/dancer-ex) |
-| Java | . |
+| Java |  |
 
 OpenShift Container Platform提供的其他镜像包括：
 
@@ -23,13 +25,29 @@ OpenShift Container Platform提供的其他镜像包括：
 
 * [Jenkins](https://github.com/openshift/jenkins)
 
-## 在你开始之前 {#developers-console-before-you-begin}
+## 在示例项目开始之前 {#developers-console-before-you-begin}
 
 * 您必须能够访问OpenShift Container Platform的正在运行的实例。如果您没有访问权限，请与您的集群管理员联系。
 
-* 您的实例必须由集群管理员使用[即时应用模板](https://docs.openshift.com/container-platform/3.5/dev_guide/templates.html#using-the-instantapp-templates)和[构建器映像](https://docs.openshift.com/container-platform/3.5/using_images/s2i_images/index.html#using-images-s2i-images-index)进行预配置。如果它们不可用，请将集群管理员引导至“[加载默认映像流和模板”](https://docs.openshift.com/container-platform/3.5/install_config/imagestreams_templates.html#install-config-imagestreams-templates)主题。
+* 您的实例必须由集群管理员使用[即时应用模板](https://docs.openshift.com/container-platform/3.5/dev_guide/templates.html#using-the-instantapp-templates)和[构建器映像](https://docs.openshift.com/container-platform/3.5/using_images/s2i_images/index.html#using-images-s2i-images-index)进行预配置。如果它们不可用，请联系集群管理员“[下载默认映像流和模板”](https://docs.openshift.com/container-platform/3.5/install_config/imagestreams_templates.html#install-config-imagestreams-templates)主题。
 
 * 您必须[下载并安装](https://docs.openshift.com/container-platform/3.5/cli_reference/get_started_cli.html#cli-reference-get-started-cli)OpenShift Container Platform CLI。
+
+## 建立分支仓库 {#developers-console-video}
+
+1. 登录到GitHub，访问[Ruby示例](https://github.com/openshift/ruby-ex)页面。
+
+         这件![](/assets/感叹号3%.png)
+
+1. |  | 本主题遵循Ruby示例，但您可以使用[OpenShift Container Platform GitHub项目中提供的](https://docs.openshift.com/container-platform/3.6/getting_started/developers_console.html#getting-started-developers-cli-languages)任何语言示例。 |
+   | :--- | :--- |
+2. [叉存储库](https://help.github.com/articles/fork-a-repo/)。
+
+   你被重定向到你的新叉子。
+
+3. 复制叉子的克隆URL。
+
+4. 将存储库克隆到本地计算机。
 
 ## 后续示例介绍的参考视频 {#developers-console-video}
 
