@@ -9,5 +9,8 @@
     * [2.1.1-Kubernets](11kai-shi/21ji-chu-she-shi-zu-jian/211-kubernets.md)
     * [2.1.2-容器仓库](11kai-shi/21ji-chu-she-shi-zu-jian/212rong-qi-cang-ku.md)
     * [2.1.3-web控制台](11kai-shi/21ji-chu-she-shi-zu-jian/213-webkong-zhi-tai.md)
-  * [2.2.2-docker](11kai-shi/21ji-chu-she-shi-zu-jian/222-docker.md)
+  * [2.2-核心概念](11kai-shi/22he-xin-gai-nian.md)
+    * [2.2.1- Containers & Images](11kai-shi/22he-xin-gai-nian/221rong-qi-he-jing-xiang.md)
+    * [2.2.2-Pod & service](11kai-shi/22he-xin-gai-nian/222-podhe-service.md)
+    * 2.2.3-Projects & Users
 
