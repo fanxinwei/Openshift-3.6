@@ -8,7 +8,7 @@ OpenShift Container Platform Web控制台是可从Web浏览器访问的用户界
 
 ## CLI下载 {#web-console-cli-downloads}
 
-您可以从Web控制台的“**命令行工具”**页面下载并解压CLI，以在Linux，MacOSX和Windows客户端上使用。
+您可以从Web控制台的“**命令行工具”**页面下载并解压CLI，以在Linux，MacOSX和Windows客户端上使用。![](/assets/屏幕快照 2017-10-31 22.21.08.png)
 
 ## 项目概述 {#project-overviews}
 
