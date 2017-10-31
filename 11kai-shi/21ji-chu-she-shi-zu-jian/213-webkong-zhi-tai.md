@@ -36,9 +36,7 @@ OpenShift Container Platform Web控制台是可从Web浏览器访问的用户界
 
 【8】”Monitoring“选项：查看builds，pod和deployments的日志，以及项目中所有对象的事件通知。
 
-## StatefulSets {#web-console-statefulsets}
 
-`StatefulSet`作为OpenShift容器平台3.5中的[技术预览](https://access.redhat.com/support/offerings/techpreview)功能引入，并保留在技术预览中。
 
-甲`StatefulSet`控制器提供一个唯一的标识它的豆荚和确定部署和缩放的顺序。`StatefulSet`对于唯一的网络标识符，持久存储，优雅部署和缩放以及优雅的删除和终止是有用的。
+
 
