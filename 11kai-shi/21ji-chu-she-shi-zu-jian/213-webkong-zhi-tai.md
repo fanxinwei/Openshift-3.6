@@ -12,9 +12,9 @@ OpenShift Container Platform Web控制台是可从Web浏览器访问的用户界
 
 ## 项目概述 {#project-overviews}
 
+![](/assets/屏幕快照 2017-10-31 22.20.15.png)
+
 [登录](https://docs.openshift.com/container-platform/3.6/dev_guide/authentication.html#dev-guide-authentication)之后，Web控制台为开发者提供当前选择的[项目](https://docs.openshift.com/container-platform/3.6/dev_guide/projects.html#dev-guide-projects)情况：
-
-
 
 图2. Web Console项目情况
 
