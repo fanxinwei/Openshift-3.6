@@ -14,7 +14,7 @@ Linux内核多年来一直在集成容器技术的功能。最近Docker项目为
 
 Pod能除了可以运行容器，还可以初始化容器设置。Pod允许您重新组织安装脚本和绑定代码。初始化容器与常规容器不同之处在于它总是运行到完成。每个初始化容器必须在下一个启动之前成功完成。
 
-有关更多信息，请参考[Pods和Services](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#pods-services-init-containers)。
+有关更多信息，请参考2.2.2-[Pods和Services](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#pods-services-init-containers)中的信息。
 
 ## 镜像 {#docker-images}
 
