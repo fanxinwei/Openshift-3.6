@@ -92,9 +92,7 @@ spec:
 
 ## Init Container——初始化状态容器 {#pods-services-init-containers}
 
-> ![](/assets/铅笔-3.5%.png.png)在kubernetes 1.3的POD中有两类容器：一类是系统容器（POD Container），一类是用户容器（User Container）；在用户容器中，现在又分成两类容器：一类是初始化容器（Init Container），一类是应用容器（App Container）。Init Container是做初始化工作的容器。可以有一个或多个，如果有多个，这些 Init Container 按照定义的顺序依次执行，只有所有的InitContainer 执行完后。真正的应用容器才启动。
-
-
+> ![](/assets/铅笔-3.5%.png.png)在kubernetes 1.3的POD中有两类容器：一类是系统容器（POD Container），一类是用户容器（User Container）；在用户容器中，又分成两类容器：一类是初始化容器（Init Container），一类是应用容器（App Container）。Init Container是做初始化工作的容器。可以有一个或多个，如果有多个，这些 Init Container 按照定义的顺序依次执行，只有所有的InitContainer 执行完后。真正的应用容器才启动。
 
 一个[初始化容器](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)在APP Container运行之前就启动了。Init容器可以共享卷，执行网络操作并执行计算。Init容器还可以阻止或延迟app container的启动，直到满足某些先决条件。
 
@@ -108,11 +106,11 @@ spec:
 
 在所有init容器成功之前，一个容器不能准备好。
 
-有关[init容器使用示例，](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#examples)请参阅Kubernetes文档。
+有关[init初始化容器使用示例，](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#examples)请参阅Kubernetes文档。
 
 以下示例概述了一个具有两个init容器的简单Pod。第一个init容器等待，`myservice`第二个等待`mydb`。一旦两个容器都成功，Pod就会启动。
 
-示例2.示例Init Container Container对象定义（YAML）
+示例2.Init Container Container对象定义（YAML）
 
 ```
 apiVersion: v1
@@ -135,23 +133,13 @@ spec:
     command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']
 ```
 
-|  | 指定`myservice`容器。 |
-| :--- | :--- |
-|  | 指定`mydb`容器。 |
+【1】指定`myservice`容器。
 
-每个init容器都有[一个应用程序容器的](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#example-pod-definition)所有[字段，](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#example-pod-definition)除了[`readinessProbe`](https://docs.openshift.com/container-platform/3.6/dev_guide/application_health.html#container-health-checks-using-probes)。Init容器必须退出以使pod启动继续，并且不能定义完成之外的准备就绪。
+【2】指定`mydb`容器。
 
-Init容器可以包含[`activeDeadlineSeconds`](https://docs.openshift.com/container-platform/3.6/dev_guide/jobs.html#jobs-setting-maximum-duration)在容器和[`livenessProbe`](https://docs.openshift.com/container-platform/3.6/dev_guide/application_health.html#container-health-checks-using-probes)容器上，以防止init容器永远失败。活动截止日期包括init容器。
+每个init container都有[一个应用程序容器](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#example-pod-definition)所有[字段，](https://docs.openshift.com/container-platform/3.6/architecture/core_concepts/pods_and_services.html#example-pod-definition)除了[`readinessProbe`](https://docs.openshift.com/container-platform/3.6/dev_guide/application_health.html#container-health-checks-using-probes)。init container必须退出以使pod启动继续，并且不能定义完成之外的准备就绪。
 
-##  {#services}
-
-
-
-##  {#services}
-
-##  {#services}
-
-##  {#services}
+init container可以包含在Pod上的[`activeDeadlineSeconds`](https://docs.openshift.com/container-platform/3.6/dev_guide/jobs.html#jobs-setting-maximum-duration)和在容器上的[`livenessProbe`](https://docs.openshift.com/container-platform/3.6/dev_guide/application_health.html#container-health-checks-using-probes)，以防止init container永远失败。
 
 ## Service {#services}
 
