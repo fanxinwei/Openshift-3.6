@@ -141,61 +141,62 @@ spec:
 
 init container可以包含在Pod上的[`activeDeadlineSeconds`](https://docs.openshift.com/container-platform/3.6/dev_guide/jobs.html#jobs-setting-maximum-duration)和在容器上的[`livenessProbe`](https://docs.openshift.com/container-platform/3.6/dev_guide/application_health.html#container-health-checks-using-probes)，以防止init container永远失败。
 
-## Service {#services}
+## Service——服务 {#services}
 
-Kubernetes[服务](http://kubernetes.io/docs/user-guide/services)作为内部负载均衡器。它识别一组[pod](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#pods)，以便代理它接收的连接。在服务可用的情况下，可以任意添加备份pod或从服务中删除服务，使任何依赖于服务的内容都可以在一致的地址处引用。默认服务clusterIP地址来自OpenShift Container Platform内部网络，它们用于允许pod相互访问。
+Kubernetes[服务](http://kubernetes.io/docs/user-guide/services)作为内部负载均衡器。它的作用是连接一组有相关联系的[pod](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#pods)并提供代理。在服务可用的情况下，可以任意添加备份的pod或从服务中删除服务，使任何依赖于服务的内容都可以在一致的地址处引用。默认情况分下的提供服务的clusterIP地址来自OpenShift Container Platform内部网络，它可以使相关的pod可以进行相互访问。
 
-要允许对服务的外部访问，可以将额外的`externalIP`和群集[外部的](https://docs.openshift.com/container-platform/3.5/dev_guide/getting_traffic_into_cluster.html#using-externalIP)`ingressIP`地址分配给服务。这些地址也可以是提供[高可用性](https://docs.openshift.com/container-platform/3.5/admin_guide/high_availability.html#admin-guide-high-availability)访问服务的虚拟IP地址。
+如果需要在外部访问服务，需要额外的`externalIP`和`ingressIP`地址分配给service。这些地址也可以是提供[高可用性](https://docs.openshift.com/container-platform/3.5/admin_guide/high_availability.html#admin-guide-high-availability)访问服务的虚拟IP地址。
 
-服务被分配一个IP地址和端口对，当被访问时，代理到适当的pod。服务使用标签选择器来查找在特定端口上提供特定网络服务的所有运行的容器。
+服务被分配一个IP地址和port pair，当被访问时会选择适当的pod。服务使用标签选择器来查找在特定端口上提供特定网络服务的所有运行的容器。
 
-像pod一样，服务是REST对象。以下示例显示了上述定义的服务的定义：
+和pod一样，服务是REST对象。以下示例显示了一个服务由Pod组成的定义：
 
-示例2.服务对象定义（YAML）
+apiVersion: v1
 
 ```
-apiVersion: v1
 kind: Service
 metadata:
-  name: docker-registry      【1】
+  name: docker-registry       【1】
 spec:
   selector:                   【2】
     docker-registry: default
-  portalIP: 172.30.136.123   【3】
+  portalIP: 172.30.136.123    【3】
   ports:
   - nodePort: 0
-    port: 5000               【4】
+    port: 5000                【4】
     protocol: TCP
     targetPort: 5000          【5】
 ```
 
-| 【1】服务名称docker-registry还用于构造一个带有服务IP的环境变量，该服务IP插入同一命名空间中的其他pod中。最大名称长度为63个字符。 |
-| :--- |
-| 【2】标签选择器标识所有pods，其中附加了**docker-registry = default**标签作为备份pod。 |
-| 【3】服务的虚拟IP，从内部IP池创建时自动分配。 |
-| 【4】端口服务侦听。 |
-| 【5】服务转发连接的后台上的端口。 |
+【1】服务名称docker-registr被用来构造一个环境变量，该服务IP插入同一命名空间中的其他pod中。最大名称长度为63个字符
 
-该[Kubernetes文件](http://kubernetes.io/docs/user-guide/services/)对服务的更多信息。
+【2】标签选择器标识所有pods，其中附加了docker-registry = default标签作为备份pod。
 
-### 服务externalIPs {#service-externalip}
+【3】服务的虚拟IP，从内部IP池创建时自动分配。
 
-除了集群的内部IP地址，用户还可以配置[集群外部的](https://docs.openshift.com/container-platform/3.5/dev_guide/getting_traffic_into_cluster.html#getting-traffic-into-cluster)IP地址。管理员负责确保流量到达具有此IP的节点。
+【4】端口服务侦听。
 
-外部IP必须由[_**master-config.yaml**_](https://docs.openshift.com/container-platform/3.5/admin_guide/tcp_ingress_external_ports.html#unique-external-ips-ingress-traffic-configure-cluster)文件中配置的**ExternalIPNetworkCIDRs**范围，由集群管理员选择。当_**master-config.yaml**_更改时，主服务必须重新启动。
+【5】服务转发连接的后台上的端口。
 
-示例3. SampleIPNetworkCIDR /etc/origin/master/master-config.yaml
+可参考[Kubernetes文件](http://kubernetes.io/docs/user-guide/services/)对服务的提供的更多信息。
+
+### Service externalIP——服务外部IP {#service-externalip}
+
+除群集的内部IP地址外，用户还可以配置[群集外部的](https://docs.openshift.com/container-platform/3.6/dev_guide/expose_service/index.html#getting-traffic-into-cluster-index)IP地址。管理员负责确保流量到达具有此IP的节点。
+
+外部IP必须由集群管理员在[_**master-config.yaml**_](https://docs.openshift.com/container-platform/3.6/admin_guide/tcp_ingress_external_ports.html#unique-external-ips-ingress-traffic-configure-cluster)文件中配置**ExternalIPNetworkCIDR的**范围中。当_**master-config.yaml**_更改时，必须重新启动主服务。
+
+示例4.示例ExternalIPNetworkCIDR /etc/origin/master/master-config.yamlnetworkConfig：
 
 ```
 networkConfig：
-
   ExternalIPNetworkCIDR：172.47.0.0/24
 ```
 
-示例4.服务externalIPs定义（JSON）
+示例5.服务外部IP定义（JSON）
 
 ```
-{
+{    
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
@@ -220,21 +221,19 @@ networkConfig：
 }
 ```
 
-| 【1】 | **端口** | 暴露的外部IP地址列表。除内部IP地址外） |
-| :--- | :--- | :--- |
-|  |  |  |
+【1】端口所在的外部IP地址
 
-### 服务 ingressIP {#service-ingressip}
+### Service ingressIP——服务内部IP {#service-ingressip}
 
-在非云集群中，可以从地址池自动分配externalIP地址。这样就无需管理员手动分配。
+在非云集群中，可以从地址池中自动分配外部IP地址。这消除了管理员手动分配它们的需要。
 
-池配置在_**/etc/origin/master/master-config.yaml**_文件中。更改此文件后，重新启动主服务。
+地址池在_**/etc/origin/master/master-config.yaml**_文件中配置。更改此文件后，需重新启动Master service。
 
-将`ingressIPNetworkCIDR`被设置为`172.29.0.0/16`默认。如果集群环境尚未使用此专用范围，请使用默认范围或设置自定义范围。
+在默认情况下`ingressIPNetworkCIDR`设置为`172.29.0.0/16`。如果群集环境尚未使用此范围，请使用默认范围或设置自定义范围。
 
-> 如果您使用的是高可用性，则该范围必须小于256个地址。
+> ![](/assets/提示3%.png)如果您使用的是高可用性，则该范围必须小于256个地址。
 
-示例5. ingressIPNetworkCIDR /etc/origin/master/master-config.yaml
+示例6. ingressIPNetworkCIDR /etc/origin/master/master-config.yaml
 
 ```
 networkConfig：
@@ -242,15 +241,16 @@ networkConfig：
   ingressIPNetworkCIDR：172.29.0.0/16
 ```
 
-### 服务NodePort {#service-nodeport}
+### Service NodePort {#service-nodeport}
 
-设置服务`type=NodePort`将从标志配置的范围（默认值：30000-32767）分配一个端口，每个节点将代理该端口（每个节点上相同的端口号）到您的服务中。
+设置服务`type=NodePort`将从标志配置的范围（默认值：30000-32767）分配一个端口，并且每个node将把该端口（每个node上的相同端口号）代理到服务中。
 
-所选端口将在服务配置`spec.ports[*].nodePort`中显示、
+  
+所选端口将在服务配置`spec.ports[*].nodePort`中显示。
 
-要指定一个自定义端口，只需将端口号放在nodePort字段中。自定义端口号必须在nodePorts的配置范围内。当'**master-config.yaml**'更改时，master服务必须重新启动。
+指定一个自定义端口，只需将端口号放在nodePort字段中。自定义端口号必须在nodePorts的配置范围内。当**master-config.yaml**更改时，master service必须重新启动。
 
-示例6. servicesNodePortRange /etc/origin/master/master-config.yaml示例
+示例7. servicesNodePortRange /etc/origin/master/master-config.yaml
 
 ```
 kubernetesMasterConfig：
@@ -258,23 +258,23 @@ kubernetesMasterConfig：
   servicesNodePortRange：“”
 ```
 
-该服务将被可见当开启`<NodeIP>:spec.ports[].nodePort`和`spec.clusterIp:spec.ports[].port`
+当开启`<NodeIP>:spec.ports[].nodePort`和`spec.clusterIp:spec.ports[].port`该服务将被可见。
 
-> @提示：设置nodePort是一种特权操作。
+> ![](/assets/提示3%.png)设置nodePort是一种特权操作。
 
 ### 服务代理模式 {#service-proxy-mode}
 
-OpenShift Container Platform提供两种不同的路由服务。默认模式是基于**iptables**，使用概率性**iptables**重写规则来分发端点pod之间的服务连接。另外一个老的模式是使用用户空间进程来接受传入的连接，然后在客户端和端点pod之代理流量。
+OpenShift Container Platform提供两种不同的路由服务。默认模式是基于**iptables**，使用概率性**iptables **rewriting rules来分发连接着Pod的服务。另外一个老的模式是使用用户空间进程来接受传入的连接，在client和pod之间代理流量。
 
-基于**iptables**的实现效率更高，但它要求所有端点始终能够接受连接;用户空间模式实现较慢，但可以轮询尝试多个端点，直到找到可用的端点。如果您有良好的[准备状态检查](https://docs.openshift.com/container-platform/3.5/dev_guide/application_health.html#dev-guide-application-health)（或通常可靠的节点和pod），那么基于**iptables**的服务代理是最佳选择。否则，您可以在安装时启用基于用户空间的代理，或通过编辑节点配置文件部署群集后启用。
+基于**iptables**的实现效率更高，但它要求所有endpoints始终能够接受连接；用户空间模式实现较慢，但可以轮询尝试多个endpoint，直到找到可用的端点。如果您有良好的[准备状态检查](https://docs.openshift.com/container-platform/3.5/dev_guide/application_health.html#dev-guide-application-health)（或可靠的node和pod），那么基于**iptables**的服务代理是最佳选择。否则，您可以在安装时启用基于用户空间的代理，或通过编辑节点配置文件部署群集后启用。
 
 ## 标签 {#labels}
 
 标签用于组织、分组或选择API对象。例如，[pod](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#pods)通过标签“标记”，然后[服务](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#services)使用标签选择器来标识它们代理的pod。这使得服务可以引用，甚至将具有潜在不同容器的作为相关实体作整体处理。
 
-大多数对象可以在其元数据中包含标签。因此，标签可用于分组任意相关的对象；例如，[可以](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations)对一个特定应用的所有[pod](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#pods)，[服务](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#services)，[复制控制器](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/deployments.html#replication-controllers)和[部署配置](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations)进行分组。
+大多数对象可以在其元数据中包含标签。因此，标签可用于分组任意相关的对象；例如，对一个特定应用的所有[pod](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#pods)，[服务](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/pods_and_services.html#services)，[replication controller](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/deployments.html#replication-controllers)和[部署配置](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations)进行分组。
 
-标签是简单的键/值对，如以下示例所示：
+标签是简单的键/值对：
 
 ```
 labels:
@@ -282,21 +282,21 @@ labels:
   key2: value2
 ```
 
-考虑：
-
 * 由**nginx**容器组成的pod，标签为**role = webserver**。
 
 * 由**Apache httpd**容器组成的pod，具有相同的label**= webserver**标签。
 
-定义为使用具有**role = webserver**标签的pod的服务或复制控制器将这两个pod视为同一组的一部分。
+定义为使用具有**role = webserver**标签的pod的
 
-该[Kubernetes文件](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/user-guide/labels.md)对标签的更多信息。
+使用相同**role = webserver**标签的service或replication controller内部的的Pod视为同一组。
 
-## 端点 {#endpoints}
+[Kubernetes文件](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/user-guide/labels.md)对标签提供更多信息。
+
+## Endpoints——端点 {#endpoints}
 
 返回服务的服务器称为其端点，并由具有与服务名称相同的**端点**类型的对象指定。当服务由一个pod返回时，这些pod通常由标签选择器指定，OpenShift Container Platform会自动创建指向这些pod的端点对象。
 
-在某些情况下，您可能需要创建一个服务，但是是在OpenShift Container Platform集群中的外部主机返回服务。在这种情况下，您可以省略`selector`服务中的字段，并[手动创建端点对象](https://docs.openshift.com/container-platform/3.5/dev_guide/integrating_external_services.html#dev-guide-integrating-external-services)。
+在某些情况下，您可能需要创建一个服务，但是是在OpenShift Container Platform集群的外部主机返回该服务。在这种情况下，您可以省略`selector`服务中的字段，并[手动创建端点对象](https://docs.openshift.com/container-platform/3.5/dev_guide/integrating_external_services.html#dev-guide-integrating-external-services)。
 
-请注意，OpenShift Container Platform不会让大多数用户手动创建一个端点对象，该对象指向[为pod和服务IP保留的网络块中的IP地址](https://docs.openshift.com/container-platform/3.5/install_config/configuring_sdn.html#configuring-the-pod-network-on-masters)。只有拥有[资源](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#evaluating-authorization)[权限](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#evaluating-authorization)[集群管理员](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#roles)或其他用在户[`createendpoints/restricted`](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#evaluating-authorization)才能创建此类端点对象。
+请注意，OpenShift容器平台不会让大多数用户手动创建一个Endpoint对象，该对象指向[the network blocks reserved for pod and service IPs](https://docs.openshift.com/container-platform/3.6/install_config/configuring_sdn.html#configuring-the-pod-network-on-masters) 。只有[资源](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#evaluating-authorization)[权限](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#evaluating-authorization)[集群管理员](https://docs.openshift.com/container-platform/3.5/architecture/additional_concepts/authorization.html#roles)或其他用户才能创建这样的Endpoint对象。
 
